@@ -13,6 +13,7 @@ var todaHumidityEl = document.querySelector("#today-humidity")
 var todayDescriptionEl = document.querySelector("#today-description")
 var todayIconEl = document.querySelector('#today-icon')
 
+
 function getApi(weatherUrl){
     //test
 var cityName = "Sydney" //searchInputEl.value
@@ -24,18 +25,18 @@ fetch(weatherUrl)
         response.json().then(function (data){
             console.log(data);
 
-            //to know which data weather time to take from
-            //Need to find a better solution
-            var timeNow = moment().format("YYYY-MM-DD, HH:mm:ss")
-            console.log(timeNow)
+            //time-related EL
             var todayDataTime1 = moment(data.list[0].dt_txt, "YYYY-MM-DD, HH:mm:ss").format("YYYY-MM-DD, HH:mm:ss")
             var todayDataTime2 = moment(data.list[1].dt_txt, "YYYY-MM-DD, HH:mm:ss").format("YYYY-MM-DD, HH:mm:ss")
             var todayDataTime3 = moment(data.list[2].dt_txt, "YYYY-MM-DD, HH:mm:ss").format("YYYY-MM-DD, HH:mm:ss")
             var todayDataTime4 = moment(data.list[3].dt_txt, "YYYY-MM-DD, HH:mm:ss").format("YYYY-MM-DD, HH:mm:ss")
             var todayDataTime5 = moment(data.list[4].dt_txt, "YYYY-MM-DD, HH:mm:ss").format("YYYY-MM-DD, HH:mm:ss")
-            
-            console.log(todayDataTime1)
+            var timeNow = moment().format("YYYY-MM-DD, HH:mm:ss")
 
+            //to know which data weather time to take from
+            //Need to find a better solution
+            function getTodayData(timeNow, todayDataTime1, todayDataTime2, todayDataTime3, todayDataTime4, todayDataTime5){
+            
             if (timeNow >= todayDataTime1 && timeNow < todayDataTime2){
                 var todayData = data.list[0]
                 renderTodayCard(todayData)
@@ -53,6 +54,7 @@ fetch(weatherUrl)
                 var todayData = data.list[4]
                 renderTodayCard(todayData)
             }
+        };
             // for (var i = 0; i < 5; i ++){
  
             // var timeNow = moment().format("YYYY-MM-DD, HH:mm:ss")
@@ -94,6 +96,9 @@ fetch(weatherUrl)
                 todayDescriptionEl.innerHTML = titleCase(todayData.weather[0].description)
                 todayIconEl.setAttribute('src', "http://openweathermap.org/img/wn/" + todayData.weather[0].icon + ".png")
                     }
+
+         //onclick
+         getTodayData(timeNow, todayDataTime1, todayDataTime2, todayDataTime3, todayDataTime4, todayDataTime5);           
         });
     } else {
         alert ("Error: " + response.statusText + "\n  Input a valid city name");

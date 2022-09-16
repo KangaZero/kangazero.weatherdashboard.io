@@ -13,6 +13,15 @@ var todaHumidityEl = document.querySelector("#today-humidity")
 var todayDescriptionEl = document.querySelector("#today-description")
 var todayIconEl = document.querySelector('#today-icon')
 
+//other-cards EL
+//TODO create these elements in js
+var futureCardContainer = document.querySelector('#small-cards-container');
+// var futureCardEl = document.querySelectorAll('#future-card')
+// var futureTimeEl = document.querySelectorAll('#future-day-time')
+// var futureTitleEl = document.querySelectorAll('#future-day-title')
+// var futureTemperatureEl = document.querySelectorAll('#card-temperature')
+// var futureWindEl = document.querySelectorAll('#card-wind')
+// var futureHumidityEl = document.querySelectorAll('#card-humidity')
 
 function getApi(weatherUrl){
     //test
@@ -97,8 +106,67 @@ fetch(weatherUrl)
                 todayIconEl.setAttribute('src', "http://openweathermap.org/img/wn/" + todayData.weather[0].icon + ".png")
                     }
 
+            function renderFutureCards(){
+                for (var i = 9; i < data.list.length; i+=7){
+                    var futureData = data.list[i];
+
+                    // var test = document.createElement('p');
+                    // test.textContent = futureData.main.humidity + " %";
+                    // leftbarEl.appendChild(test);
+
+                    var futureCardEl = document.createElement('div');
+                        futureCardEl.setAttribute("class", "card text-white bg-dark");
+
+                    var futureTimeEl = document.createElement('div');
+                        futureTimeEl.innerHTML = moment(futureData.dt_txt, "YYYY-MM-DD, HH:mm:ss").format("DD-MM");
+
+                    var futureCardBodyEl = document.createElement('div');
+                        futureCardBodyEl.classList.add('card-body');
+
+                    var futureTitleEl = document.createElement('h5');
+                        futureTimeEl.classList.add('card-title');
+
+                    var futureTemperatureEl = document.createElement('p');
+                        futureTemperatureEl.classList.add('card-text');
+                        futureTemperatureEl.innerHTML = (futureData.main.temp - 273.15).toFixed(1) + "°C";
+
+                    var futureWindEl = document.createElement('p');
+                        futureWindEl.classList.add('card-text');
+                        futureWindEl.innerHTML = (futureData.wind.speed * 1.60934).toFixed(2) + " km/h"
+
+                    var futureHumidityEl = document.createElement('p');
+                        futureHumidityEl.classList.add('card-text');
+                        futureHumidityEl.innerHTML = futureData.main.humidity + " %";
+
+                    //Append
+                    futureCardContainer.appendChild(futureCardEl);
+                    futureCardEl.appendChild(futureTimeEl);
+                    futureTimeEl.appendChild(futureCardBodyEl);
+                    futureCardBodyEl.appendChild(futureTemperatureEl);
+                    futureCardBodyEl.appendChild(futureWindEl);
+                    futureCardBodyEl.appendChild(futureHumidityEl);
+
+                    // <div id="future-card" class="card text-white bg-dark">
+                    //             <div class="card-header"><span id ="future-day-time">Test</span></div>
+                    //                 <div class="card-body">
+                    //                     <h5 id="future-day-title" class="card-title"><i>Test</i></h5>
+                    //                         <p class="card-text">Temp: <span id="card-temperature"></span></p>
+                    //                         <p class="card-text">Wind: <span id="card-wind"></span></p>
+                    //                         <p class="card-text">Humidity: <span id="card-humidity"></span></p>
+                    //                 </div>
+                    //         </div>
+                //     for (var i = 0; i < futureCardEl.length; i++){  
+                //     futureTimeEl[i].innerHTML = moment(futureData.dt_txt, "YYYY-MM-DD, HH:mm:ss").format("DD-MM");
+                //    // futureTitleEl.innerHTML = futureData.
+                //     futureTemperatureEl[i].innerHTML = (futureData.main.temp - 273.15).toFixed(1) + "°C"
+                //     futureWindEl[i].innerHTML = (futureData.wind.speed * 1.60934).toFixed(2) + " km/h"
+                //     futureHumidityEl[i].innerHTML = futureData.main.humidity + " %"
+                //     };
+                };
+            };
          //onclick
          getTodayData(timeNow, todayDataTime1, todayDataTime2, todayDataTime3, todayDataTime4, todayDataTime5);           
+         renderFutureCards();
         });
     } else {
         alert ("Error: " + response.statusText + "\n  Input a valid city name");

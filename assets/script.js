@@ -13,20 +13,8 @@ var todaHumidityEl = document.querySelector("#today-humidity")
 var todayDescriptionEl = document.querySelector("#today-description")
 var todayIconEl = document.querySelector('#today-icon')
 
-//test out parseTime
-var parseTimeNow = moment('2022-09-16 06:00:00').format("YYYY-MM-DD, HH:mm:ss")
-var timeNow = moment().format("YYYY-MM-DD, HH:mm:ss")
-console.log(timeNow)
-console.log(parseTimeNow)
-
-if (timeNow == parseTimeNow || timeNow > parseTimeNow){
-    console.log("true")
-} else { console.log("false")}
-
-//2022-09-16 06:00:00
-
 function getApi(weatherUrl){
-    
+    //test
 var cityName = "Sydney" //searchInputEl.value
 var weatherUrl ="https://api.openweathermap.org/data/2.5/forecast?q=" + cityName + "&appid=a6ccc92be7f9a48de8089f65a85e1b1a"
 
@@ -39,22 +27,26 @@ fetch(weatherUrl)
             //to know which data weather time to take from
             //Need to find a better solution
             var timeNow = moment().format("YYYY-MM-DD, HH:mm:ss")
-            var todayDataTime1 = moment(data.list[0].dt_txt).format("YYYY-MM-DD, HH:mm:ss")
-            var todayDataTime2 = moment(data.list[1].dt_txt).format("YYYY-MM-DD, HH:mm:ss")
-            var todayDataTime3 = moment(data.list[2].dt_txt).format("YYYY-MM-DD, HH:mm:ss")
-            var todayDataTime4 = moment(data.list[3].dt_txt).format("YYYY-MM-DD, HH:mm:ss")
-            var todayDataTime5 = moment(data.list[4].dt_txt).format("YYYY-MM-DD, HH:mm:ss")
+            console.log(timeNow)
+            var todayDataTime1 = moment(data.list[0].dt_txt, "YYYY-MM-DD, HH:mm:ss").format("YYYY-MM-DD, HH:mm:ss")
+            var todayDataTime2 = moment(data.list[1].dt_txt, "YYYY-MM-DD, HH:mm:ss").format("YYYY-MM-DD, HH:mm:ss")
+            var todayDataTime3 = moment(data.list[2].dt_txt, "YYYY-MM-DD, HH:mm:ss").format("YYYY-MM-DD, HH:mm:ss")
+            var todayDataTime4 = moment(data.list[3].dt_txt, "YYYY-MM-DD, HH:mm:ss").format("YYYY-MM-DD, HH:mm:ss")
+            var todayDataTime5 = moment(data.list[4].dt_txt, "YYYY-MM-DD, HH:mm:ss").format("YYYY-MM-DD, HH:mm:ss")
+            
+            console.log(todayDataTime1)
 
-            if (todayDataTime1 >= timeNow){
+            if (timeNow >= todayDataTime1 && timeNow < todayDataTime2){
                 var todayData = data.list[0]
                 renderTodayCard(todayData)
-            } else if (todayDataTime2 >= timeNow && timeNow > todayDataTime1){
+            } else
+             if (timeNow >= todayDataTime2 && timeNow < todayDataTime3){
                 var todayData = data.list[1]
                 renderTodayCard(todayData)
-            } else if (todayDataTime3 >= timeNow && timeNow > todayDataTime2){
+            } else if (timeNow >= todayDataTime3 && timeNow < todayDataTime4){
                 var todayData = data.list[2]
                 renderTodayCard(todayData)
-            } else if (todayDataTime4 >= timeNow && timeNow > todayDataTime3){
+            } else if (timeNow >= todayDataTime4 && timeNow < todayDataTime5){
                 var todayData = data.list[3]
                 renderTodayCard(todayData)
             } else {
@@ -88,9 +80,11 @@ fetch(weatherUrl)
 
             // }
 
+         
+     //renders fetched DATA onto HTML with DOM manipulation
             function renderTodayCard(todayData){
                 todayCityEl.innerHTML = data.city.name
-                todayTimeEl.innerHTML = todayData.dt_txt
+                todayTimeEl.innerHTML = "(" + moment(todayData.dt_txt,"YYYY-MM-DD, HH:mm:ss").format("dddd [the] DD[th] MMMM, HH:mm") + ")"
                 //convert from Kelvin to Celsius & round off to 1 decimal place
                 //toFixed() changes it into a string
                 todayTemperatureEl.innerHTML = (todayData.main.temp - 273.15).toFixed(1) + "°C"
@@ -100,10 +94,6 @@ fetch(weatherUrl)
                 todayDescriptionEl.innerHTML = titleCase(todayData.weather[0].description)
                 todayIconEl.setAttribute('src', "http://openweathermap.org/img/wn/" + todayData.weather[0].icon + ".png")
                     }
-
-          //renders fetched DATA onto HTML with DOM manipulation
-            
-
         });
     } else {
         alert ("Error: " + response.statusText + "\n  Input a valid city name");

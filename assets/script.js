@@ -10,7 +10,8 @@ var todayTimeEl = document.querySelector("#today-time")
 var todayTemperatureEl = document.querySelector("#today-temperature")
 var todayWindEl = document.querySelector("#today-wind")
 var todaHumidityEl = document.querySelector("#today-humidity")
-var todayUVEl = document.querySelector("#today-UV")
+var todayDescriptionEl = document.querySelector("#today-description")
+var todayIconEl = document.querySelector('#today-icon')
 
 //test out parseTime
 var parseTimeNow = moment('2022-09-16 06:00:00').format("YYYY-MM-DD, HH:mm:ss")
@@ -96,8 +97,10 @@ fetch(weatherUrl)
                 //convert from miles to kilometres
                 todayWindEl.innerHTML = (todayData.wind.speed * 1.60934).toFixed(2) + " km/h"
                 todaHumidityEl.innerHTML = todayData.main.humidity + " %"
-                todayUVEl.innerHTML = "hi"   
+                todayDescriptionEl.innerHTML = titleCase(todayData.weather[0].description)
+                todayIconEl.setAttribute('src', "http://openweathermap.org/img/wn/" + todayData.weather[0].icon + ".png")
                     }
+
           //renders fetched DATA onto HTML with DOM manipulation
             
 
@@ -209,3 +212,18 @@ function init(){
 //     }) 
 //     }
 // }
+
+
+//Additional functions 
+
+//from https://stackoverflow.com/questions/32589197/how-can-i-capitalize-the-first-letter-of-each-word-in-a-string-using-javascript
+function titleCase(string) {
+    var splitStr = string.toLowerCase().split(' ');
+    for (var i = 0; i < splitStr.length; i++) {
+        //assign back into an array
+        splitStr[i] = splitStr[i].charAt(0).toUpperCase() + splitStr[i].substring(1);     
+    }
+    //Joined back as a string
+    return splitStr.join(' '); 
+ }
+

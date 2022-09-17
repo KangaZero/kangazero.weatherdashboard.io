@@ -1,11 +1,61 @@
+/* Heading */
 #header{
     background: linear-gradient(270deg, rgba(122,93,188,1) 50%, rgba(69,119,252,1) 100%);
 }
 
+#header:hover{
+    background: linear-gradient(270deg, rgb(96, 64, 170) 50%, rgb(31, 65, 159) 100%);
+    color:black;
+}
+
+/* Today Weather Info Card */
 .city-container{
-    border: 2px solid rgb(39, 160, 220);
+    border: 3px solid rgba(39, 160, 220);
+    border-radius: 8px 8px 0 0;
 }
 
 .w-90{
     width:90%;
 }
+
+#today-card:hover{
+      background: linear-gradient(45deg, rgba(69,119,252,0.3), rgba(122,93,188, 0.3) 100%);
+}
+
+/*Other Days' Info Cards*/ 
+/* Add to JS */
+.future-card-custom{
+    background-color: black;
+    transition: background-color 2s ease;
+}
+
+.future-card-custom:hover{
+    transition: rgba(9, 6, 53, 0.422);
+    cursor: pointer;
+}
+
+/* footer */
+#links{
+    background: linear-gradient(270deg, rgba(69,119,252,1) 50%, rgba(122,93,188,1) 100%);
+    min-height: 10vh;
+}
+
+ul{
+    list-style-type: none;
+}
+
+a{
+    text-decoration: none;
+    color: white;
+    font-size: 1.2rem;
+}
+
+a:hover{
+    /* animation: zoom-out 0.5s ease; */
+    color:black;
+}
+
+@keyframes zoom-out{
+    100% {
+      transform: scale(2);
+  }

@@ -1,3 +1,7 @@
+body{
+    background-color: rgb(193, 207, 249);
+}
+
 /* Heading */
 #header{
     background: linear-gradient(270deg, rgba(122,93,188,1) 50%, rgba(69,119,252,1) 100%);

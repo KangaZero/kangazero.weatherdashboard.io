@@ -165,13 +165,13 @@ function init(){
     cities = storedCities;
   }
 
-  renderCities();
+  renderCitiesFromStorage();
 }
 
 
 //4. render function with for loop, create another var with the 
 //getItem value[i];
-function renderCities(){
+function renderCitiesFromStorage(){
   for (let i = 0; i < cities.length; i++) {
     var city = cities[i];
 
@@ -187,6 +187,22 @@ function renderCities(){
   }
 
   
+}
+
+//renderCitiesFromStorage would render multiple button elements due to loop, thus this function is used instead
+function renderCities(){
+
+    var city = cities[cities.length - 1];
+    console.log(city)
+    var btnEl = document.createElement('button');
+    btnEl.setAttribute('class','container-fluid btn btn-secondary p-2 m-2');
+    btnEl.textContent = city;
+  //All fixed
+    btnEl.addEventListener('click', (e)=>{
+        getApi(e.currentTarget.outerText)
+    })
+  
+    leftbarEl.appendChild(btnEl);
 }
 
 

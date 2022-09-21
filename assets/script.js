@@ -1,5 +1,6 @@
 //var weatherUrl = api.openweathermap.org/data/2.5/forecast?lat=lat&lon=lon&appid=a6ccc92be7f9a48de8089f65a85e1b1a
 var submitBtnEl = document.querySelector('#submit');
+var formEL = document.querySelector('#button-form')
 var searchInputEl = document.querySelector('#city');
 var leftbarEl = document.querySelector('#left-bar');
 
@@ -16,25 +17,20 @@ var todayIconEl = document.querySelector('#today-icon')
 //other-cards EL
 var futureCardContainer = document.querySelector('#small-cards-container');
 
- //var cityName = searchInputEl.value.trim();
+ var cityName = searchInputEl.value.trim();
  //var weatherUrl ="https://api.openweathermap.org/data/2.5/forecast?q=" + cityName + "&appid=a6ccc92be7f9a48de8089f65a85e1b1a";
 
-function prevent(event){
-    event.preventDefault();
-    console.log(event);
-}
 //getApi(weatherUrl)
 
-function getApi(weatherUrl){
+function getApi(cityName){
 
-    var cityName = searchInputEl.value.trim();
     var weatherUrl ="https://api.openweathermap.org/data/2.5/forecast?q=" + cityName + "&appid=a6ccc92be7f9a48de8089f65a85e1b1a";
 
     fetch(weatherUrl)
     .then(function (response){
         if (response.ok){
             response.json().then(function (data){
-                console.log(data);
+               // console.log(data);
     
                 //time-related EL
                 var todayDataTime1 = moment(data.list[0].dt_txt, "YYYY-MM-DD, HH:mm:ss").format("YYYY-MM-DD, HH:mm:ss")
@@ -45,11 +41,11 @@ function getApi(weatherUrl){
                 var timeNow = moment().format("YYYY-MM-DD, HH:mm:ss")
     
                 //FutureCardsData
-                let i = 0
-                var futureData = data.list[i];
+                 let i = 0
+                 var futureData = data.list[i];
     
                 //to know which data weather time to take from
-                //Need to find a better solution
+                //Alternative solution: Could have used cnt API parameter to give 1 timestamp per day
                 function getTodayData(timeNow, todayDataTime1, todayDataTime2, todayDataTime3, todayDataTime4, todayDataTime5){
                 
                 if (timeNow >= todayDataTime1 && timeNow < todayDataTime2){
@@ -70,34 +66,7 @@ function getApi(weatherUrl){
                     renderTodayCard(todayData)
                 }
             };
-                // for (var i = 0; i < 5; i ++){
-     
-                // var timeNow = moment().format("YYYY-MM-DD, HH:mm:ss")
                
-                // window['todayDataTime' + i] = moment(data.list[i].dt_txt).format("YYYY-MM-DD, HH:mm:ss")
-                // //if datatime is larger than now & is not more than 3 hours apart
-                // if (window['todayDataTime' + i] >= timeNow && window['todayDataTime' + y] )
-                // {
-            
-                // var futureTodayDataTime = [window['todayDataTime' + i]]
-                //     console.log(futureTodayDataTime)
-                // }
-                // }
-                // for (var i = 0; i < 2; i++){
-                   
-                //     var currentDataTime = moment(data.list[i].dt_txt).format("YYYY-MM-DD, HH:mm:ss")
-                //     var nextDataTime = moment(data.list[i++].dt_txt).format("YYYY-MM-DD, HH:mm:ss")
-                //     var timeNow = moment().format("YYYY-MM-DD, HH:mm:ss")
-                //     console.log(nextDataTime)
-                //     if (timeNow <= dataTime && timeNow > dataTime2){
-                //         console.log("hi", dataTime)
-                //     } else {
-                //       //  console.log("no")
-                //     }
-    
-                // }
-    
-             
          //renders fetched DATA onto HTML with DOM manipulation
                 
          function renderTodayCard(todayData){
@@ -114,6 +83,8 @@ function getApi(weatherUrl){
                         }
     
          function renderFutureCards(futureData){
+                futureCardContainer.innerHTML = "";
+
                     for (var i = 9; i < data.list.length; i+=7){
                         //var futureData = data.list[i];
     
@@ -132,7 +103,7 @@ function getApi(weatherUrl){
                             futureCardBodyEl.classList.add('card-body');
     
                         var futureTitleEl = document.createElement('h5');
-                            futureTimeEl.classList.add('card-title');
+                            futureTitleEl.classList.add('card-title');
     
                         var futureTemperatureEl = document.createElement('p');
                             futureTemperatureEl.classList.add('card-text');
@@ -160,103 +131,84 @@ function getApi(weatherUrl){
              //onclick
              getTodayData(timeNow, todayDataTime1, todayDataTime2, todayDataTime3, todayDataTime4, todayDataTime5);           
              renderFutureCards(futureData);
-             saveCity(cityName);
             });
         } else {
             // alert ("Error: " + response.statusText + "\n  Input a valid city name");
-            console.log("Failed")
+            console.error("Failed")
         }
-     
-        console.log(weatherUrl)
-    })
     
-    //clears input once submitted
-    searchInputEl.innerHTML="";
+    })
+
     }
 
 //test
 //getApi()
 
 
-//TODO Fix THIS LAST
-function saveCity(cityName){
- localStorage.setItem('name', [cityName])
+//Save and render stored date functions //Wk4 Act 26
+var cities = [];
+
+//2.Create function to setItem, value set as previous empty array 
+//and stringify it
+
+function storeCities(){
+  localStorage.setItem("cities", JSON.stringify(cities));
 }
 
-// historyCity.addEventListener('click', function(){
-    
-//         var weatherUrl ="https://api.openweathermap.org/data/2.5/forecast?q=" + savedCityData + "&appid=a6ccc92be7f9a48de8089f65a85e1b1a"
 
-//     fetch(weatherUrl)
-//     .then(function (response){
-//     if (response.ok){
-//         response.json().then(function (data){
-//             console.log(data);
-//     })
-//     }
-//     })
-//     }) 
-
-
-//eventListeners
-
-
-//TODO create init functions
+//3. Create Init function. It renders history by parsing getItem
+//and if getItem has a value, set to empty array
 function init(){
-    renderHistory()
+  var storedCities = JSON.parse(localStorage.getItem('cities'));
+
+  if (storedCities !== null){
+    cities = storedCities;
+  }
+
+  renderCities();
 }
 
-// searchInputEl.addEventListener("keydown", (event) => {
-//     console.log(event.key)
-//     if (event.key = "Enter"){
-//         getApi
-//    
+
+//4. render function with for loop, create another var with the 
+//getItem value[i];
+function renderCities(){
+  for (let i = 0; i < cities.length; i++) {
+    var city = cities[i];
+
+    var btnEl = document.createElement('button');
+    btnEl.setAttribute('class','btn btn-secondary container p-2 m-2');
+    btnEl.textContent = city;
+  
+    leftbarEl.appendChild(btnEl);
+  }
+
+  btnEl.addEventListener('click', getApi(btnEl.textContent));
+  
+}
 
 
-//test
-// var testCityName = [searchInputEl.value];
+//5.eventlistner to form, with empty array/setItem/getItem value with push
+//method and to render and store
+formEL.addEventListener('submit', function(event){
+  event.preventDefault();
 
-// function save(){
-//     localStorage.setItem('name', JSON.stringify(testCityName));
-// }
+  var buttonText = searchInputEl.value.trim();
 
-// function init(){
+  if(buttonText === ""){
+    return;
+  }
 
-//     var storedCities = JSON.parse(localStorage.getItem('name'));
+  cities.push(buttonText);
+  //clears input text once submitted 
+  searchInputEl.value = "";
 
-//     if(storedCities !== null){
+  storeCities();
+  renderCities();
+  getApi(buttonText);
+})
 
-//     }
+init();
 
-//     renderHistory()
-
-// }
-
-// function renderHistory(){
-//     for (var i = 0;i < testCityName.length; i++){
-//         var history = testCityName[i];
-
-//         var historyCityBtn = document.createElement('button');
-//         historyCityBtn.textContent = history;
-//         historyCityBtn.setAttribute("class","btn btn-secondary container-fluid p-2 m-2")
-
-//     leftbarEl.appendChild(historyCityBtn);
-    
-//     historyCityBtn.addEventListener('click', function(){
-    
-//         var weatherUrl ="https://api.openweathermap.org/data/2.5/forecast?q=" + history + "&appid=a6ccc92be7f9a48de8089f65a85e1b1a"
-
-//     fetch(weatherUrl)
-//     .then(function (response){
-//     if (response.ok){
-//         response.json().then(function (data){
-//             console.log(data);
-//     })
-//     }
-//     })
-//     }) 
-//     }
-// }
 
 
 //Additional functions 
@@ -272,5 +224,3 @@ function titleCase(string) {
     return splitStr.join(' '); 
  }
 
-
- submitBtnEl.addEventListener('submit', prevent(event), getApi)

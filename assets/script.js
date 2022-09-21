@@ -89,7 +89,7 @@ function getApi(cityName){
                         //var futureData = data.list[i];
     
                         var futureCardEl = document.createElement('div');
-                            futureCardEl.setAttribute("class", "card text-white bg-dark future-card-custom");
+                            futureCardEl.setAttribute("class", "col-5 card my-2 text-white bg-dark future-card-custom col-md-2");
     
                         var futureTimeEl = document.createElement('div');
                             futureTimeEl.innerHTML = moment(futureData.dt_txt, "YYYY-MM-DD, HH:mm:ss").format("DD-MM");
@@ -176,7 +176,7 @@ function renderCities(){
     var city = cities[i];
 
     var btnEl = document.createElement('button');
-    btnEl.setAttribute('class','btn btn-secondary container p-2 m-2');
+    btnEl.setAttribute('class','container-fluid btn btn-secondary p-2 m-2');
     btnEl.textContent = city;
   //All fixed
     btnEl.addEventListener('click', (e)=>{

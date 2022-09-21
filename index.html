@@ -19,9 +19,9 @@
     </div>
         <div class="m-1">
             <div class="row">
-                <div id="left-bar" class="col-3">
+                <div id="left-bar" class="col-12 col-md-3">
                   
-                            <h2 class="m-2">
+                            <h2 class="m-2 text-center text-md-left">
                                 Search for a City:
                             </h2>
              <form id="button-form">
@@ -34,7 +34,7 @@
     
                 </div>
                 <!-- Right bar Area -->
-                <div id="weather-content" class="col-9">
+                <div id="weather-content" class="col-12 col-md-9">
                     <!--Today's weather data card-->
                     <div id="today-card" class="container city-container mt-3 w-90">
                         <div class="d-flex flex-row">
@@ -46,56 +46,13 @@
                         <p>Description: <span id="today-description"></span><img id="today-icon"></p>
                     </div>
                     <div class="container mt-3 w-90">
-                        <h3>
+                        <h3 class="text-center text-md-left">
                             5-Day Forecast:
                         </h3>
 
                         <!--Following days' weather cards-->
                             <div id="small-cards-container" class="d-flex flex-row flex-wrap justify-content-between mt-4">
-                            <!-- <div id="future-card" class="card text-white bg-dark">
-                                <div class="card-header"><span id ="future-day-time">Test</span></div>
-                                    <div class="card-body">
-                                        <h5 id="future-day-title" class="card-title"><i>Test</i></h5>
-                                            <p class="card-text">Temp: <span id="card-temperature"></span></p>
-                                            <p class="card-text">Wind: <span id="card-wind"></span></p>
-                                            <p class="card-text">Humidity: <span id="card-humidity"></span></p>
-                                    </div>
-                            </div>
-                            <div id="future-card" class="card text-white bg-dark">
-                                <div class="card-header"><span id ="future-day-time">Test</span></div>
-                                    <div class="card-body">
-                                        <h5 id="future-day-title" class="card-title"><i>Test</i></h5>
-                                            <p class="card-text">Temp: <span id="card-temperature"></span></p>
-                                            <p class="card-text">Wind: <span id="card-wind"></span></p>
-                                            <p class="card-text">Humidity: <span id="card-humidity"></span></p>
-                                    </div>
-                            </div>
-                            <div id="future-card" class="card text-white bg-dark">
-                                <div class="card-header"><span id ="future-day-time">Test</span></div>
-                                    <div class="card-body">
-                                        <h5 id="future-day-title" class="card-title"><i>Test</i></h5>
-                                            <p class="card-text">Temp: <span id="card-temperature"></span></p>
-                                            <p class="card-text">Wind: <span id="card-wind"></span></p>
-                                            <p class="card-text">Humidity: <span id="card-humidity"></span></p>
-                                    </div>
-                            </div>
-                            <div id="future-card" class="card text-white bg-dark">
-                                <div class="card-header"><span id ="future-day-time">Test</span></div>
-                                    <div class="card-body">
-                                        <h5 id="future-day-title" class="card-title"><i>Test</i></h5>
-                                            <p class="card-text">Temp: <span id="card-temperature"></span></p>
-                                            <p class="card-text">Wind: <span id="card-wind"></span></p>
-                                            <p class="card-text">Humidity: <span id="card-humidity"></span></p>
-                                    </div>
-                            </div>
-                            <div id="future-card" class="card text-white bg-dark">
-                                <div class="card-header"><span id ="future-day-time">Test</span></div>
-                                    <div class="card-body">
-                                        <h5 id="future-day-title" class="card-title"><i>Test</i></h5>
-                                            <p class="card-text">Temp: <span id="card-temperature"></span></p>
-                                            <p class="card-text">Wind: <span id="card-wind"></span></p>
-                                            <p class="card-text">Humidity: <span id="card-humidity"></span></p>
-                                    </div> -->
+                            <!--Rendered using JS-->
                             </div>
                         </div>
                     </div>
@@ -103,7 +60,7 @@
         </div>
     <footer>
         <div id="links" class="container-fluid h-100">
-            <ul class="d-flex flex-row flex-wrap justify-content-between mx-auto w-25 mt-5">
+            <ul class="d-flex flex-column flex-wrap justify-content-between mx-auto w-25 mt-5 flex-md-row">
                 <li><a href="https://openweathermap.org/current" target="_blank">WeatherAPI</a></li>
                 <li><a href="https://github.com/KangaZero" target="_blank"><i class="fa-brands fa-square-github"></i></a></li>
                 <li><a href="#" target="_blank">About</a></li>

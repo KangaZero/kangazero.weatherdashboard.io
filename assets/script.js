@@ -178,11 +178,14 @@ function renderCities(){
     var btnEl = document.createElement('button');
     btnEl.setAttribute('class','btn btn-secondary container p-2 m-2');
     btnEl.textContent = city;
+  //All fixed
+    btnEl.addEventListener('click', (e)=>{
+        getApi(e.currentTarget.outerText)
+    })
   
     leftbarEl.appendChild(btnEl);
   }
 
-  btnEl.addEventListener('click', getApi(btnEl.textContent));
   
 }
 

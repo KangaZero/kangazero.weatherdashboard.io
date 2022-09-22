@@ -27,10 +27,16 @@
 
 **What?**
 
+This is a website that shows a 5-day weather forecast with the use of openweather API. The current data will show avaiable weather data closest to the current time. While the other 4 days will show data from one of 5 default timestamps included. 
+The number of timestaps can be changed with the "cnt=[number]" parameter, but I spent to much time making a function to match the closest timestamp. Basically, I wish not to erase my hardwork. 
+
+
 **Technologies**
 
 This project ultilies a free API from [OpenWeather Doc](https://openweathermap.org/forecast5), which is fetched and dynamically rendered onto the index.html page with Javascript.
 The HTML page itself is styled with a combination of base CSS and a third-party library called [Bootstrap](https://getbootstrap.com/docs/5.2/getting-started/introduction/).  
+The 3rd-party library, [JQuery]() was initially included, however loading times were too long, and there was nothing beyond base Javascript needed for any of the functions used. 
+
 
 **Why?**
 
